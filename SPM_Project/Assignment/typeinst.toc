@@ -1,0 +1,13 @@
+\contentsline {section}{\numberline {1}Introduction}{2}
+\contentsline {section}{\numberline {2}Reprocessing}{2}
+\contentsline {subsection}{\numberline {2.1}Monk Dataset}{2}
+\contentsline {subsection}{\numberline {2.2}Competition Dataset}{2}
+\contentsline {section}{\numberline {3}Implementation}{2}
+\contentsline {subsection}{\numberline {3.1}Neural Network}{2}
+\contentsline {subsection}{\numberline {3.2}Monk Dataset}{2}
+\contentsline {subsection}{\numberline {3.3}Competition Dataset}{2}
+\contentsline {section}{\numberline {4}Result}{3}
+\contentsline {subsection}{\numberline {4.1}Monk Dataset}{3}
+\contentsline {subsection}{\numberline {4.2}Competition Dataset}{3}
+\contentsline {section}{\numberline {5}Conclusion}{3}
+\contentsline {section}{\numberline {6}Ackowledgements}{3}

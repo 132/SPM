@@ -1,0 +1,210 @@
+
+%%%%%%%%%%%%%%%%%%%%%%% file typeinst.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is the LaTeX source for the instructions to authors using
+% the LaTeX document class 'llncs.cls' for contributions to
+% the Lecture Notes in Computer Sciences series.
+% http://www.springer.com/lncs       Springer Heidelberg 2006/05/04
+%
+% It may be used as a template for your own input - copy it
+% to a new file with a new name and use it as the basis
+% for your article.
+%
+% NB: the document class 'llncs' has its own and detailed documentation, see
+% ftp://ftp.springer.de/data/pubftp/pub/tex/latex/llncs/latex2e/llncsdoc.pdf
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[runningheads,a4paper]{llncs}
+\usepackage[a4paper, total={7in, 8in}]{geometry}
+\usepackage{amssymb}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{listings}
+%\lstset{
+%	numbers=left
+%	language=Java
+%	frame=single,
+%	breaklines=true,
+	%postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\color{red}\hookrightarrow\space}}
+%}
+\renewcommand{\lstlistingname}{Code}
+
+\captionsetup{compatibility=false}
+
+\usepackage{url}
+\urldef{\mailsa}\path|{alfred.hofmann, ursula.barth, ingrid.haas, frank.holzwarth,|
+\urldef{\mailsb}\path|anna.kramer, leonie.kunz, christine.reiss, nicole.sator,|
+\urldef{\mailsc}\path|erika.siebert-cole, peter.strasser, lncs}@springer.com|    
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\begin{document}
+
+\mainmatter  
+
+
+\newpage
+\tableofcontents
+\newpage
+
+\abstract{
+This assignment represents the final project of SPM.
+} 
+
+\section{Introduction}
+\label{Intro}
+% Describe that dataset and generally about sections
+With the development of technologies, a number of data rise day by day.
+
+With the large various data nowadays, tasks 
+
+
+The remaining of the assignment is constructed: the Section~\ref{Reprocess} describes about the reprocessing of the data sets.
+The implementation of the assignments is represented in the Section~\ref{Implement}, while the two last Section~\ref{Result} and~\ref{Conc} are about the result and conclusion.
+	
+\section{Reprocessing}
+\label{Reprocess}
+% describe and explain steps about preprocessing data 
+% discuss about the result
+% explain the competition preprocessing
+In this part of the report, the reprocessing of data sets (Monk and Competition) are described in two subsections.
+\subsection{Monk Dataset}
+\subsection{Competition Dataset}
+In the competition data set including two sets: training and testing, both of these sets need to be reprocessed before applying the neural network.
+Firstly, the description and the first column (id attribute) in these sets are removed. 
+After that two last columns (the label attributes) and the remaining attributes in the training set are split into two sets: labels and training features.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Implementation}
+\label{Implement}
+The implementation is explained in this part of the report with details of general neural network approach and the way applying in two data sets.
+\subsection{Neural Network}
+\label{NN}
+In general, the back-propagation, momentum and regulization are applied to build this approach.
+In details, the approach uses only one hidden layer in the NN. However, the number of units in this layer is tried with variety of number.
+
+Grid search technique is also applied with different parameters such as: learning rate, hidden unit (the number of hidden unit in the hidden layer)
+\subsection{Monk Dataset}
+
+\subsection{Competition Dataset}
+
+For the evaluation of parameters and the accuracy of the model, the double cross-validation (CV) technique is applied.
+
+With this technique, the training competition data set is split into ``k'' training data parts and testing data  (this is the first parameter in CV).
+Each of ``k'' part data is applied the approach from the Section~\ref{NN} to generate the Least Mean Square Error (LMS). 
+From these LMS, the best hyper parameters are chosen and apply on the whole data set.
+At this time, the second CV is applied with a different ``k'' folds parameter.
+It is similar with the first CV, but in this case the hyper parameter from the first CV is apply to whole data set and generate the accuracy.
+Finally, the blind data set uses this model to archive the label or target attributes.
+
+With this technique, the training competition data set is split into ``k1'' couple training and testing parts.
+From each couple training and testing part, the training part is applied with another CV and a ``k2'' parameter to generate ``k2'' couple training and validation parts.
+After training, the best ``k1'' hyper parameters from the ``k1'' * ``k2'' are found.
+From these ``k1'' hyper parameters, the ``k1'' accuracy of couple training and testing parts are generated.
+
+Then the best hyper parameter is chosen to apply the whole data set before predicting the separated blind test set.
+
+%training data parts and testing data  (this is the first parameter in CV).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Result}
+\label{Result}
+\subsection{Monk Dataset}
+\subsection{Competition Dataset}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Conclusion}
+\label{Conc}
+The assignment exploits WebGraph framework to solve some statistics tasks and experiments from the paper~\cite{broder2000graph}. With these works, the framework shows their useful techniques and tools which simply exploits large graphs.
+
+\section{Ackowledgements}
+I would like to show my gratitude to Prof. Marco Danelutto about lessons.
+Finally, I would also like to extend my thank to \LaTeX $ $ and Springer for this format.
+
+\bibliography{Ref}
+\bibliographystyle{plain}
+
+\end{document}
+
+\iffals
+
+\section{Neural Network}
+\label{NN}
+
+% general about the algorithm
+% discuss about the result
+
+\section{Metrics and Activation}
+\label{Metrics}
+\subsection{Sigmoid}
+\subsection{Activation Function}
+\subsection{Identity Function}
+\subsection{UnitStep}
+\section{Cross-Validation}
+\label{CV}
+
+
+
+\begin{figure*}[t!]
+	\centering
+	\begin{subfigure}[b]{0.6\textwidth}
+		%\centering
+		\includegraphics[scale = 0.6]{image/Unipi_Image}
+		\caption{In-degree distribution with an exponent 4.5}
+	\end{subfigure}
+	\\
+	\begin{subfigure}[b]{0.6\textwidth}
+		%\centering
+		\includegraphics[scale = 0.6]{image/Unipi_Image}
+		\caption{Out-degree distribution with an exponent 5.5}
+	\end{subfigure}
+	\caption{In-degree and Out-degree distributions}
+		\label{Fig:Distri}
+\end{figure*}
+\textbf{Second Part}:
+\begin{figure*}[t!]
+	\centering
+	\begin{subfigure}[b]{0.6\textwidth}
+		%\centering
+		\includegraphics[scale = 0.6]{image/Unipi_Image}
+		\caption{Size of WCC distribution with an exponent 10 of power law}
+	\end{subfigure}
+	\\
+	\begin{subfigure}[b]{0.6\textwidth}
+		%\centering
+		\includegraphics[scale = 0.6]{image/Unipi_Image}
+		\caption{Size of SCC distribution with an exponent 9 of power law}
+	\end{subfigure}
+
+	\caption{Size of WCC and SCC distributions}
+		\label{Fig:WCC_SCC}
+\end{figure*}
+
+\begin{figure*}[t!]
+
+	\centering
+	\begin{subfigure}[b]{0.6\textwidth}
+		%\centering
+		\includegraphics[scale = 0.6]{image/Unipi_Image}
+		\caption{Experiment with BFS on forward direction}
+	\end{subfigure}
+	\\
+	\begin{subfigure}[b]{0.6\textwidth}
+		%\centering
+		\includegraphics[scale = 0.6]{image/Unipi_Image}
+		\caption{Experiment with BFS on backward direction}
+	\end{subfigure}
+	\\
+	\begin{subfigure}[b]{0.6\textwidth}
+		%\centering
+		\includegraphics[scale = 0.6]{image/Unipi_Image}
+		\caption{Experiment with BFS on both directions}
+	\end{subfigure}
+	\caption{Experiments of BFS algorithm on three kinds of graph}
+		\label{Fig:BFS}
+\end{figure*}
