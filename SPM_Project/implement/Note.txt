@@ -1,0 +1,4 @@
+implement file => try to calculate each other: parallel and sequential
+
+parallel: execute the parallel
+sequential: execute the sequential

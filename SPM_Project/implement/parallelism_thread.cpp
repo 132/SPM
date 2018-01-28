@@ -6,6 +6,8 @@
 #include <random>
 #include <Montecarlo.h>
 #include <function.h>
+#include <vector>
+#include <stage.h>
 
 using namespace Montecarlo;
 
@@ -67,5 +69,22 @@ int main(int argc, char * argv[]) {
     //      workers.push_back(new Worker)
     // ff_farm <> myFarm(Workers);
     // if (myFarm.run_and_wait_end() < 0) error("running myFarm");
+    
+    initStage initS();
+    randomStage randomS;
+    //finalStage finalS;
+    /////////////////////////////
+    //int nworkers = atoi(argv[pow+3]);
+    int nworkers = 10;
+    std::vector<ff_node *> listWorkers;
+    for(int i=0;i < nworkers; i++);
+        listWorkers.push_back(new worker_farm);
+    //ff_Farm<double> farm(std::move(listWorkers), true);
+    
+    ff_farm <> intervalFarm(listWorkers);
+    
+    ff_Pipe <> pipe(randomS, intervalFarm);//, finalS);
+    
+    if(pipe.run_and_wait_end() < 0) error("running Pipe");
     return 0;
 }
