@@ -28,27 +28,31 @@ int main(int argc, char * argv[]) {
 // chec is it enough parameters
     if(argc != pow + 4)
         std::cout<<"Error: Lack of Parameter"<<std::endl;
-
-    std::ifstream streamInterval;
+    
     std::string fileName = "../input/Input.txt";
-    streamInterval.open("../input/Input.txt");
     
-    int a, b;
-    streamInterval >> a >> b;
-    std::cout<<"From input: "<<a << " "<<b<<std::endl;
+    std::cout<<"############################- Start stages -#########################################"<<std::endl;
+    func givenFunc(pow, listPara);
+    readStream readS(fileName, givenFunc);
+    
+    ff_node_F<interval_number> randomN(randomNumber);
+    ff_node_F<interval_number> randomListN(randomListNumber);
+    
+    ff_node_F<interval_number> calMontecarlo(calculateMonte);
+    
+    std::vector<ff_node *> listWorkers;
+    for(int i=0;i < nworkers; i++);
+        listWorkers.push_back(new worker_farm);
+    
+    ff_farm <> intervalFarm(listWorkers);
+    ff_Pipe<> pipe(readS, randomN, randomListN, intervalFarm);
+    
+    if(pipe.run_and_wait_end() < 0) error("running Pipe");
 
-    for(int i=0;i<pow+1;i++)
-        std::cout<<listPara[i]<<std::endl;
-    //if(argc < )
-    //    std::cout<<"Error: pow 
-    
-    
-    // random a number
-    std::mt19937 rng;
-    rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,6); // distribution in range [1, 6]
+    delete listPara;
 
-    std::cout << dist6(rng) << std::endl;
+    return 0;
+}
     
     // main for pipe + farm
     
@@ -68,28 +72,30 @@ int main(int argc, char * argv[]) {
     //      workers.push_back(new Worker)
     // ff_farm <> myFarm(Workers);
     // if (myFarm.run_and_wait_end() < 0) error("running myFarm");
-    std::cout<<"############################- Start stages -#########################################"<<std::endl;
-    //initStage initS();
-    func givenFunc(pow, listPara);
-    readStream readS(fileName, givenFunc);
-    
-    ff_node_F<interval_number> randomN(randomNumber);
-    ff_node_F<interval_number> randomListN(randomListNumber);
-    
-    ff_node_F<interval_number> calMontecarlo(calculateMonte);
-    
-    std::vector<ff_node *> listWorkers;
-    for(int i=0;i < nworkers; i++);
-        listWorkers.push_back(new worker_farm);
-    
-    ff_farm <> intervalFarm(listWorkers);
-    ff_Pipe<> pipe(readS, randomN, randomListN, intervalFarm);
-    
-    if(pipe.run_and_wait_end() < 0) error("running Pipe");
+
     //finalStage finalS;
     /////////////////////////////
     //int nworkers = atoi(argv[pow+3]);
  /*   
+  * std::ifstream streamInterval;
+    
+    streamInterval.open("../input/Input.txt");
+    
+    int a, b;
+    streamInterval >> a >> b;
+    std::cout<<"From input: "<<a << " "<<b<<std::endl;
+
+    for(int i=0;i<pow+1;i++)
+        std::cout<<listPara[i]<<std::endl;
+
+    // random a number
+    std::mt19937 rng;
+    rng.seed(std::random_device()());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(1,6); // distribution in range [1, 6]
+
+    std::cout << dist6(rng) << std::endl;
+
+    
     std::vector<ff_node *> listWorkers;
     for(int i=0;i < nworkers; i++);
         listWorkers.push_back(new worker_farm);
@@ -99,7 +105,3 @@ int main(int argc, char * argv[]) {
     
     //ff_Pipe <> pipe(randomS, intervalFarm);//, finalS);
 */
-    delete listPara;
-
-    return 0;
-}
