@@ -59,19 +59,26 @@ namespace Montecarlo{
     
 
     worker_farm::worker_farm(){
-        std::cout<<"trideptrai"<<std::endl;
+        std::cout<<"worker from a Farm"<<std::endl;
     }
-    void * worker_farm::svc(void * task){
-        return 0;
+    
+    interval_number * worker_farm::svc(interval_number * intervalN){
+        intervalN->calMonteNumber();
+        return intervalN;
     }
+}
+/*    
 // summary result
     interval_number * summaryResult::svc(interval_number * intervalN){
         return intervalN;
     }
 
 // Go to FARM
-    void * emittor_farm::svc(void *){ // emittor of farm stage
-        return 0;
+    interval_number * emittor_farm::svc(interval_number * intervalN){ // emittor of farm stage
+        for(int i=0;i<intervalN->N_number;i++){
+            ff_send_out(new worker_farm);
+        }
+        return EOS;
     }
     
  //   void * worker_farm::svc(void * task){    // worker of farm stage
@@ -79,11 +86,11 @@ namespace Montecarlo{
  //   }
 
     
-    void * collector_farm::svc(void *){   // collector of farm stage
+    interval_number * collector_farm::svc(interval_number *intervalN){   // collector of farm stage
         return 0;
     }
 }
-/*
+
     void finalStage::svc_end(){
         std::cout<<"Complete the Cycle of stages."<<std::endl;
     }

@@ -11,28 +11,22 @@
 #include <interval_number.h>
 
 using namespace Montecarlo;
-/*
-interval_number * randomNumber(interval_number *intervalN, ff_node *const){
-        std::mt19937 rng;
-        rng.seed(std::random_device()());
-        std::uniform_int_distribution<std::mt19937::result_type> dist6(intervalN->a,intervalN->b); // distribution in range [1, 6]
 
-        std::cout << "random N: "<<dist6(rng) << " of "<<intervalN->a<< " "<<intervalN->b<<std::endl;
-        intervalN->setN(dist6(rng));
-        return intervalN;
-    }
-*/
 int main(int argc, char * argv[]) {
 // take the arguments from the command line
+    
+    int nworkers = atoi(argv[1]);
 // take parameters and power of given function
     
-    int pow = atoi(argv[1]);
+    int pow = atoi(argv[2]);
     double * listPara = new double [pow+1];
     for(int i=0;i<pow+1;i++)
-        listPara[i] = atof(argv[i+2]);
+        listPara[i] = atof(argv[i+3]);
+    
+    std::cout<<"number of argument: "<<argc<<std::endl;
     
 // chec is it enough parameters
-    if(argc-3 != pow)
+    if(argc != pow + 4)
         std::cout<<"Error: Lack of Parameter"<<std::endl;
 
     std::ifstream streamInterval;
@@ -81,15 +75,21 @@ int main(int argc, char * argv[]) {
     
     ff_node_F<interval_number> randomN(randomNumber);
     ff_node_F<interval_number> randomListN(randomListNumber);
+    
     ff_node_F<interval_number> calMontecarlo(calculateMonte);
     
-    ff_Pipe<> pipe(readS, randomN, randomListN, calMontecarlo);
+    std::vector<ff_node *> listWorkers;
+    for(int i=0;i < nworkers; i++);
+        listWorkers.push_back(new worker_farm);
+    
+    ff_farm <> intervalFarm(listWorkers);
+    ff_Pipe<> pipe(readS, randomN, randomListN, intervalFarm);
     
     if(pipe.run_and_wait_end() < 0) error("running Pipe");
     //finalStage finalS;
     /////////////////////////////
     //int nworkers = atoi(argv[pow+3]);
-    int nworkers = 10;
+ /*   
     std::vector<ff_node *> listWorkers;
     for(int i=0;i < nworkers; i++);
         listWorkers.push_back(new worker_farm);
@@ -98,6 +98,8 @@ int main(int argc, char * argv[]) {
     ff_farm <> intervalFarm(listWorkers);
     
     //ff_Pipe <> pipe(randomS, intervalFarm);//, finalS);
+*/
     delete listPara;
+
     return 0;
 }

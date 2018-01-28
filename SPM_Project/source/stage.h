@@ -34,23 +34,23 @@ struct summaryResult: public ff_minode_t<interval_number>{
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////// 
-struct emittor_farm: public ff_node{
-//public:
-    void * svc(void *);
-};
 
-struct worker_farm: public ff_node{
-    //interval_number intervalN;
-    
+struct worker_farm: public ff_node_t<interval_number>{
     worker_farm();
-    void * svc(void * task);
+    interval_number * svc(interval_number * intervalN);
     
 };
-
-struct collector_farm: public ff_node{
+/*
+struct emittor_farm: public ff_node_t<interval_number>{
 //public:
-    void * svc(void *);
+    interval_number * svc(interval_number * intervalN);
 };
+
+struct collector_farm: public ff_node_t<interval_number>{
+//public:
+    interval_number * svc(interval_number * intervalN);
+};
+*/
 }
 
 /*struct initStage: ff_node{
