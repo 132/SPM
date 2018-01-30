@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
 #include <random>
+
 #include <vector>
+
 #include <chrono>
 #include <mutex>
 #include <atomic>
@@ -70,8 +72,6 @@ int main(int argc, char * argv[]) {
     int numberInterval = 0;
     auto start = std::chrono::system_clock::now();
     std::thread run[nworker];
-
-    /*
     do{
         for(int i=0;i<nworker;i++){
             if (streamInterval >> a >> b){
@@ -92,7 +92,7 @@ int main(int argc, char * argv[]) {
         for(int i=0;i<nworker;i++)
             run[i].join();
     }while(EndOfFile ==1);
-    */
+
  //   for(int i=0;i<pow+1;i++)
  //       std::cout<<listPara[i]<<std::endl;
 

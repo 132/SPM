@@ -59,7 +59,7 @@ namespace Montecarlo{
     
 
     worker_farm::worker_farm(){
-        std::cout<<"worker from a Farm"<<std::endl;
+        //std::cout<<"worker from a Farm"<<std::endl;
     }
     
     interval_number * worker_farm::svc(interval_number * intervalN){

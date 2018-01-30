@@ -9,8 +9,12 @@
 #include <vector>
 #include <stage.h>
 #include <interval_number.h>
+#include <chrono>
+#include <mutex>
+#include <atomic>
 
 using namespace Montecarlo;
+std::mutex m;
 
 int main(int argc, char * argv[]) {
 // take the arguments from the command line
@@ -23,7 +27,7 @@ int main(int argc, char * argv[]) {
     for(int i=0;i<pow+1;i++)
         listPara[i] = atof(argv[i+3]);
     
-    std::cout<<"number of argument: "<<argc<<std::endl;
+    //std::cout<<"number of argument: "<<argc<<std::endl;
     
 // chec is it enough parameters
     if(argc != pow + 4)
@@ -31,8 +35,9 @@ int main(int argc, char * argv[]) {
     
     std::string fileName = "../input/Input.txt";
     
-    std::cout<<"############################- Start stages -#########################################"<<std::endl;
+    //std::cout<<"############################- Start stages -#########################################"<<std::endl;
     func givenFunc(pow, listPara);
+    
     readStream readS(fileName, givenFunc);
     
     ff_node_F<interval_number> randomN(randomNumber);
@@ -47,8 +52,13 @@ int main(int argc, char * argv[]) {
     ff_farm <> intervalFarm(listWorkers);
     ff_Pipe<> pipe(readS, randomN, randomListN, intervalFarm);
     
+    auto start = std::chrono::system_clock::now();
     if(pipe.run_and_wait_end() < 0) error("running Pipe");
-
+    auto end = std::chrono::system_clock::now();
+    std::chrono::duration<double> elapsed_seconds = end-start;
+    
+    //std::cout<<"Time of FF: "<<elapsed_seconds.count()<<std::endl;
+    std::cout<<"Workers: "<< nworkers << " PowerOfFunc: " << pow << " TimeFF: " << elapsed_seconds.count() <<std::endl;
     delete listPara;
 
     return 0;
