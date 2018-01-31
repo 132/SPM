@@ -19,8 +19,10 @@ namespace Montecarlo{
     
     interval_number * readStream::svc(interval_number *){
         int a, b;
+        int id=0;
         while (readStreamFile >> a >> b){
-            ff_send_out(new interval_number(a, b, mainFunc));
+            ff_send_out(new interval_number(id ,a, b, mainFunc));
+            id++;
         }
         return EOS;
     }

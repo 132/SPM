@@ -19,7 +19,7 @@ std::mutex m;
 int main(int argc, char * argv[]) {
 // take the arguments from the command line
     
-    int nworkers = atoi(argv[1]);
+    int nworkers = atoi(argv[1])-2;
 // take parameters and power of given function
     
     int pow = atoi(argv[2]);

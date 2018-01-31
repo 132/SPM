@@ -68,6 +68,7 @@ int main(int argc, char * argv[]) {
         std::cout<<"Error: Lack of Parameter"<<std::endl;
     
     int a, b;
+    int id=0;
     int EndOfFile = 0;
     int numberInterval = 0;
     auto start = std::chrono::system_clock::now();
@@ -78,7 +79,7 @@ int main(int argc, char * argv[]) {
                 //std::cout<<"Worker: "<< i <<std::endl;
                 //interval_number interval_temp(a,b,givenFunc);
                 
-                run[i] = std::thread(randomNumberN, new interval_number(a,b,givenFunc), givenFunc);
+                run[i] = std::thread(randomNumberN, new interval_number(id+1,a,b,givenFunc), givenFunc);
                 numberInterval ++;
                 //run[i] = thread(randomNumber,ref(interval_temp));
                 //run[i] = thread(randomListNumber, ref(interval_temp));

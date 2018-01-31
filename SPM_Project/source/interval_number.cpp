@@ -4,7 +4,7 @@
 
 namespace Montecarlo{
 
-    interval_number::interval_number(int aa, int bb, func ff): a(aa), b(bb), mainFunc(ff){}
+    interval_number::interval_number(int iid, int aa, int bb, func ff): id(iid), a(aa), b(bb), mainFunc(ff){}
     
     void interval_number::setN(int N){
         N_number = N;
