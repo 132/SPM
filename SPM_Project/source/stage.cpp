@@ -16,7 +16,6 @@ namespace Montecarlo{
         //mainFunc = mainF;
     }
     
-    
     interval_number * readStream::svc(interval_number *){
         int a, b;
         int id=0;
@@ -55,19 +54,34 @@ namespace Montecarlo{
 // main Task
     interval_number * calculateMonte(interval_number * intervalN, ff_node *const){
         intervalN->calMonteNumber();
-        
         return intervalN;
     }
     
-
     worker_farm::worker_farm(){
-        //std::cout<<"worker from a Farm"<<std::endl;
     }
     
     interval_number * worker_farm::svc(interval_number * intervalN){
         intervalN->calMonteNumber();
         return intervalN;
     }
+    
+    interval_number * write_stage(interval_number * intervalN, ff_node * const){
+        std::ofstream outStream;
+        outStream.open("../input/Output.txt", std::ios_base::app);
+        
+        outStream << intervalN->monteNumber<<" ";
+        delete intervalN;
+        return (interval_number *)GO_ON;
+    }
+    
+//    writer_lastStage::writer_lastStage(std::string nf){
+//        outStream.open(nf);
+//    }
+    
+    interval_number * writer_lastStage::svc(interval_number * intervalN){
+        return write_stage(intervalN, this);
+    }
+
 }
 /*    
 // summary result

@@ -40,6 +40,12 @@ struct worker_farm: public ff_node_t<interval_number>{
     interval_number * svc(interval_number * intervalN);
     
 };
+
+interval_number * write_stage(interval_number * in, ff_node * const);
+    
+struct writer_lastStage: public ff_minode_t<interval_number>{
+    interval_number * svc(interval_number * task);
+};
 /*
 struct emittor_farm: public ff_node_t<interval_number>{
 //public:

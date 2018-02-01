@@ -19,20 +19,26 @@ using namespace Montecarlo;
 std::mutex mutex_readS;
 std::mutex mutex_random_n;
 std::mutex mutex_to_farm;
+std::mutex mutex_write2File;
 
 std::queue<interval_number* > readQ;
 std::queue<interval_number* > randomN_randomListNQ;
 std::queue<interval_number* > toFarmQ;
+std::queue<interval_number* > write2FileQ;
 
 std::condition_variable cond_read_randomN;
 std::condition_variable cond_randomN_randomListN;
 std::condition_variable cond_randomListN_farm;
+std::condition_variable cond_write2File;
+
+int number_farm = 0;
+int intervalCounter = 0;
 
 bool read_ready = true;
 bool randomNumber_ready = false;
 bool randomList_ready = false;
 bool startFarm_ready = false;
-
+bool write2File_ready = false;
 /*
 void calMonteNumberThread(interval_number * intervalN, func givenFunc){
     intervalN->calMonteNumber();
@@ -68,12 +74,7 @@ void randomNumberN(interval_number * intervalN, func givenFunc){
 }
 */
 
-void calMonteNumberThread(interval_number * intervalN){
-    
-    intervalN->calMonteNumber();
-    std::cout<<"calculate Monte: "<<intervalN->a<< " : "<< intervalN->monteNumber<<std::endl;
-    
-}
+
 
 int randomNumberN(interval_number * intervalN){
     std::mt19937 rng;
@@ -111,7 +112,8 @@ void readStream(std::ifstream &inputStream, func gf){
         std::cout<<"result of readStream: "<<interval_temp->a << " " << interval_temp->b<<std::endl;
     
         readQ.push(interval_temp);
-    
+        
+        intervalCounter++;
         std::cout<<"from Q: "<<readQ.front()->a<< " " << readQ.front()->b<<std::endl;
     
         randomNumber_ready = true;
@@ -167,28 +169,100 @@ void randomListNumber(){
     }while(!randomN_randomListNQ.empty());
 }
 
+void calMonteNumberThread(){
+   // std::unique_lock<std::mutex> lk2farm(mutex_to_farm);
+   // cond_randomListN_farm.wait(lk2farm, []{return startFarm_ready;});
+    
+  //      std::lock_guard<std::mutex> lk(mutex_write2File);
+            
+            auto intervao_temp = toFarmQ.front();
+            toFarmQ.pop();
+    
+            intervao_temp->calMonteNumber();
+            
+            std::cout<<"calculate Monte: "<<intervao_temp->a<< " : "<< intervao_temp->monteNumber<<std::endl;
+            write2FileQ.push(intervao_temp);
+            write2File_ready = true;
+        
+    //    cond_write2File.notify_one();
+        
+    //lk2farm.unlock();
+    //cond_randomListN_farm.notify_one();
+}
+
 void farmStage(int nworker){
     std::thread run[nworker];
-    std::cout<<"number of worker: "<<nworker<<std::endl;
-    do{   
+    
+    //do{   
         std::cout<<"goto FarmStage:" << std::endl;
-        for(int i=0; i<nworker;i++){
-            std::unique_lock<std::mutex> lk2farm(mutex_to_farm);
-            cond_randomListN_farm.wait(lk2farm, []{return startFarm_ready;});
-            if(!toFarmQ.empty()){
-                auto intervao_temp = toFarmQ.front();
-                toFarmQ.pop();
-                run[i] = std::thread(calMonteNumberThread, intervao_temp);
-            } else {
-                break;
-            }
-            lk2farm.unlock();
-            cond_randomListN_farm.notify_one();
-        }
-        for(int i=0;i<nworker;i++)
+     //do{   
+        std::unique_lock<std::mutex> lk2farm(mutex_to_farm);
+        cond_randomListN_farm.wait(lk2farm, []{return startFarm_ready;});
+        std::cout<<"number of worker: "<<nworker<<std::endl;
+        do{
+            //for(int i=0; i<nworker;i++){
+            // std::unique_lock<std::mutex> lk2farm(mutex_to_farm);
+            // cond_randomListN_farm.wait(lk2farm, []{return startFarm_ready;});
+  
+                //if(!toFarmQ.empty()){
+                    //startFarm_ready = false;
+                    
+    //                auto intervao_temp = toFarmQ.front();
+    //                toFarmQ.pop();
+            
+                std::cout<<"create a thread farm"<<std::endl;
+                run[number_farm] = std::thread(calMonteNumberThread);
+                number_farm++;
+                    
+                std::cout<<"number of farm: "<<number_farm<<std::endl;
+                if(toFarmQ.empty()){
+                    std::cout<<"break in do While"<<std::endl;
+                    break;
+                }
+                //} else {
+                    //lk2farm.unlock();
+                    //cond_randomListN_farm.notify_one();
+                //    break;
+                //}
+                
+                //lk2farm.unlock();
+                //cond_randomListN_farm.notify_one();
+        } while (number_farm < nworker);
+            
+        for(int i=0;i<number_farm;i++){
             run[i].join();
-    }while(!toFarmQ.empty());
+            intervalCounter -= number_farm;
+            std::cout<<"intervalCounter: "<<intervalCounter<<std::endl;
+            if (i == nworker - 1)
+                break;
+        }
+        
+        //}while(!toFarmQ.empty());
+        lk2farm.unlock();
+        cond_randomListN_farm.notify_one();
+        
+        
+        
+     //}while(intervalCounter > 0);
+    //}while(true);
 }
+
+
+
+void writeFile(){
+    std::unique_lock<std::mutex> lk2File(mutex_write2File);
+    cond_write2File.wait(lk2File, []{return write2File_ready;});
+    
+        std::cout<<"write 2 file: "<<std::endl;
+        std::ofstream outFile("../input/Output_thread.txt", std::ios_base::app);
+        auto intervalN = write2FileQ.front();
+        write2FileQ.pop();
+        outFile<<intervalN->monteNumber<<" ";
+    
+    lk2File.unlock();
+    cond_write2File.notify_one();
+}
+
 
 int main(int argc, char * argv[]) {
 // take the arguments from the command line
@@ -211,13 +285,13 @@ int main(int argc, char * argv[]) {
     std::thread readS(readStream, std::ref(streamInterval), givenFunc);                // read stream and create Q
     std::thread generateRandomN(randomNumber);    // a random number stage
     std::thread generateListN(randomListNumber);      // a list of random number 
-    
-    //call a farm
-    farmStage(nworker-3);
+    farmStage(nworker-4);   //call a farm
+    //std::thread write2File(writeFile);
 
     readS.join();
     generateRandomN.join();
     generateListN.join();
+    //write2File.join();
     
     auto end = std::chrono::system_clock::now();
     std::chrono::duration<double> elapsed_seconds = end-start;

@@ -34,23 +34,29 @@ int main(int argc, char * argv[]) {
         std::cout<<"Error: Lack of Parameter"<<std::endl;
     
     std::string fileName = "../input/Input.txt";
+    //std::string outFile = "../input/Output.txt";
+    std::ofstream ofs;
+    ofs.open("../input/Output.txt", std::ofstream::out | std::ofstream::trunc);
+    ofs.close();
     
     //std::cout<<"############################- Start stages -#########################################"<<std::endl;
     func givenFunc(pow, listPara);
     
     readStream readS(fileName, givenFunc);
-    
     ff_node_F<interval_number> randomN(randomNumber);
     ff_node_F<interval_number> randomListN(randomListNumber);
-    
     ff_node_F<interval_number> calMontecarlo(calculateMonte);
+    
+    writer_lastStage write_last_stage;
     
     std::vector<ff_node *> listWorkers;
     for(int i=0;i < nworkers; i++);
         listWorkers.push_back(new worker_farm);
     
     ff_farm <> intervalFarm(listWorkers);
-    ff_Pipe<> pipe(readS, randomN, randomListN, intervalFarm);
+    intervalFarm.remove_collector();
+    
+    ff_Pipe<> pipe(readS, randomN, randomListN, intervalFarm, write_last_stage);
     
     auto start = std::chrono::system_clock::now();
     if(pipe.run_and_wait_end() < 0) error("running Pipe");
