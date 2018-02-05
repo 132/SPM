@@ -9,10 +9,11 @@
 #include <fstream>
 #include <queue> 
 #include <condition_variable>
+#include <ctime>
 
-#include <function.h>
-#include <interval_number.h>
-#include <Montecarlo.h>
+#include "function.h"
+#include "interval_number.h"
+#include "Montecarlo.h"
 
 using namespace Montecarlo;
 
@@ -49,60 +50,35 @@ bool randomList_ready = false;
 bool startFarm_ready = false;
 bool calMonte_ready = false;
 bool write2File_ready = false;
-/*
-void calMonteNumberThread(interval_number * intervalN, func givenFunc){
-    intervalN->calMonteNumber();
-}
-
-
-void randomListNumber(interval_number * intervalN, func givenFunc){
-    int * temp = new int [intervalN->N_number];
-        
-    for(int i=0; i<intervalN->N_number; i++){
-        std::mt19937 rng;
-        rng.seed(std::random_device()());
-        std::uniform_int_distribution<std::mt19937::result_type> dist6(intervalN->a,intervalN->b);
-        //std::cout << "random in N: "<<dist6(rng)<<std::endl;
-        temp[i] = dist6(rng);
-    }
-    //std::cout<<"complete .. "<<std::endl;
-    intervalN->setListNumber(temp);
-    //std::thread(calMonteNumberThread, std::ref(intervalN), givenFunc);
-    calMonteNumberThread(std::ref(intervalN), givenFunc);
-}
-
-
-void randomNumberN(interval_number * intervalN, func givenFunc){
-    std::mt19937 rng;
-    rng.seed(std::random_device()());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(intervalN->b-intervalN->a,5*(intervalN->b-intervalN->a)); // distribution in range [1, 6]
-    //std::cout << "random N: "<<dist6(rng) << " of "<<intervalN->a<< " "<<intervalN->b<<std::endl;
-    intervalN->setN(dist6(rng));
-    //std::thread(randomListNumber, std::ref(intervalN), givenFunc);
-    //std::cout << "random N2: "<<dist6(rng) << " of "<<intervalN->a<< " "<<intervalN->b<<std::endl;
-    randomListNumber(intervalN, givenFunc);
-}
-*/
-
 
 
 int randomNumberN(interval_number * intervalN){
+    /*
     std::mt19937 rng;
     rng.seed(std::random_device()());
     std::uniform_int_distribution<std::mt19937::result_type> dist6(intervalN->b-intervalN->a,5*(intervalN->b-intervalN->a)); // distribution in range [1, 6]
     //std::cout << "random N: "<<dist6(rng) << " of "<<intervalN->a<< " "<<intervalN->b<<std::endl;
     return dist6(rng);
+    */
+    int seed = time(NULL);
+    srand(seed);
+    return rand() % (intervalN->b - intervalN->a)*5 +  (intervalN->b - intervalN->a);
 }
 
 void randomListNumberN(interval_number * intervalN){
     int * temp = new int [intervalN->N_number];
-        
+    
+    int seed = time(NULL);
+    srand(seed);
     for(int i=0; i<intervalN->N_number; i++){
+       /*
         std::mt19937 rng;
         rng.seed(std::random_device()());
         std::uniform_int_distribution<std::mt19937::result_type> dist6(intervalN->a,intervalN->b);
         //std::cout << "random in N: "<<dist6(rng)<<std::endl;
         temp[i] = dist6(rng);
+        */
+        temp[i] = rand() % intervalN->b + intervalN->a;
     }
     //std::cout<<"complete .. "<<std::endl;
     intervalN->setListNumber(temp);
@@ -144,7 +120,7 @@ void randomNumber(){
             
                 auto interval_temp = readQ.front();
                 readQ.pop();
-               // std::cout<<"randomNumber: "<<interval_temp->a<<std::endl;
+                //std::cout<<"randomNumber: "<<interval_temp->a<<std::endl;
                 interval_temp->setN(randomNumberN(interval_temp));
                 randomN_randomListNQ.push(interval_temp);
                 randomList_ready = true;
@@ -172,7 +148,7 @@ void randomListNumber(){
             
                 auto interval_temp = randomN_randomListNQ.front();
                 randomN_randomListNQ.pop();
-               // std::cout<<"in randomListNumber: "<<interval_temp->a<<std::endl;
+                //std::cout<<"in randomListNumber: "<<interval_temp->a<<std::endl;
                 randomListNumberN(interval_temp);
                 toFarmQ.push(interval_temp);
                 startFarm_ready = true;
@@ -242,7 +218,7 @@ void calMonteNumberThread(){
     
             intervao_temp->calMonteNumber();
             
-      //      std::cout<<"calculate Monte: "<<intervao_temp->a<< " : "<< intervao_temp->monteNumber<<std::endl;
+            //std::cout<<"calculate Monte: "<<intervao_temp->a<< " : "<< intervao_temp->monteNumber<<std::endl;
 
             write2FileQ.push(intervao_temp);
             
@@ -308,7 +284,7 @@ void farmStage(int nworker){
       //          std::cout<<"last thing: "<<temp->a<<std::endl;
             }
             if((endOfrandomList && toFarmQ.empty()) || endOfWorker == nworker){
-      //          std::cout<<"end of Farm============================"<<std::endl;
+                //std::cout<<"end of Farm============================"<<std::endl;
       //          std::cout<<"number of emittorQ.size(): "<<emittorQ.size()<<" +++++++++++++++++"<<std::endl;
                 break;
             }
@@ -332,7 +308,7 @@ void farmStage(int nworker){
                 }
        //         std::cout<<"Afer push new emittorQ: "<<emittorQ.size()<<" gap: "<<gap<<" toFarmQ.size(): "<<toFarmQ.size()<<std::endl;
                 if(emittorQ.size() > nworker){
-       //             std::cout<<"greater than nworker"<<std::endl;
+                  // std::cout<<"greater than nworker"<<std::endl;
                     break;
                 }
             }    
@@ -363,7 +339,7 @@ void farmStage(int nworker){
             
         }while(true);
         
-     //   std::cout<<"out sisde Farm ========================================"<<std::endl;
+       // std::cout<<"out sisde Farm ========================================"<<std::endl;
         endOfFarm = true;
         cond_divide2Farm.notify_all();
         cond_write2File.notify_one();
@@ -385,7 +361,7 @@ void writeFile(){
     //std::cout<<"Write2FileQ: "<<write2FileQ.empty()<<std::endl;
     std::unique_lock<std::mutex> lk2File(mutex_write2File);
     cond_write2File.wait(lk2File, []{
-   //     std::cout<<"writeFile() checking "<<std::endl;
+        //std::cout<<"writeFile() checking write2File.empty() "<<write2FileQ.empty()<<" endOfFarm "<<endOfFarm<<std::endl;
         return (!write2FileQ.empty() || endOfFarm);});
     
     if(endOfFarm && write2FileQ.empty())
@@ -404,7 +380,7 @@ void writeFile(){
     
     }while(true);
     
-  //  std::cout<<"complete write 2 FIle"<<std::endl;
+   // std::cout<<"complete write 2 FIle"<<std::endl;
 }
 
 
@@ -428,13 +404,14 @@ int main(int argc, char * argv[]) {
     if(argc != pow + 4)
         std::cout<<"Error: Lack of Parameter"<<std::endl;
     
+    
     auto start = std::chrono::system_clock::now();
     
     std::thread readS(readStream, std::ref(streamInterval), givenFunc);                // read stream and create Q
     std::thread generateRandomN(randomNumber);    // a random number stage
     std::thread generateListN(randomListNumber);      // a list of random number 
     
-    std::thread generateFarm(farmStage, nworker-4);   //call a farm
+    std::thread generateFarm(farmStage, nworker-5);   //call a farm
     std::thread write2File(writeFile);
     
 

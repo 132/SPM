@@ -1,0 +1,47 @@
+export FF_ROOT=$HOME/git/SPM/SPM_Project/source/
+g++ -std=c++11 -I$FF_ROOT -O3 test1.cpp -o test1 -pthread
+
+
+export FF_ROOT = /home/spm1501/fastflow
+g++ -std=c++0x -I/home/spm1501/fastflow -O3 test1.cpp -o test1 -pthread
+
+g++ -std=c++0x -I$FF_ROOT -O3 -DNO_DEFAULT_MAPPING test1.cpp -o test1 -pthread
+icc -mmic -I$FF_ROOT -O3 -DNO_DEFAULT_MAPPING test1.cpp -o test1 -pthread
+
+
+icc test1.cpp -std=c++11 -I/home/spm1501/fastflow -pthread -o test1
+
+cmake -DCMAKE_BUILD_TYPE=RELEASE ..
+
+cmake -DCMAKE_CXX_COMPILER=icc ..
+
+
+icc parallelism_ff.cpp -std=c++11 -I/home/spm1501/fastflow -pthread -O3 -DNO_DEFAULT_MAPPING -o ../implement/ff_parallelism
+icc parallelism_thread.cpp -std=c++11 -I/home/spm1501/fastflow -pthread -O3 -DNO_DEFAULT_MAPPING -o thread_parallelism
+
+icc Montecarlo.cpp function.cpp interval_number.cpp stage.cpp parallelism_ff.cpp -std=c++11 -I/home/spm1501/fastflow -pthread -O3 -DNO_DEFAULT_MAPPING -o ../implement/ff_parallelism
+
+icc Montecarlo.cpp function.cpp interval_number.cpp parallelism_thread.cpp -std=c++11 -I/home/spm1501/fastflow -pthread -o ../implement/thread_parallelism
+
+
+ff_node:
+int svc_init() // at the begining of ff_node life cycle
+void *svc(void *task) // call for each input task of the stream
+void svc_end()  // call at the end of node life cycle
+
+int run_and_wait_end(bool=false)    // start the node and wait for itstermination
+int run_and_freeze() // first sets the freeze flag then starts the node
+int wait_freezing() // waits for node pause
+int wait()  // wait for node termination
+
+
+In order to be able to use the tools, you have to run the script in
+
+source /opt/intel/compilers_and_libraries/linux/bin/compilervars.sh intel64 
+that will set up the proper compiler and library paths. I suggest you to make the execution of the script automatic by inserting the call to the script in the .bashrc configuration file of your home directory (add a line such as source /opt/intel/composerxe/bin/compilervars.sh intel64 at the end of this file)
+In order to run a program on PHI:
+
+compile it on the host using icc with the additional flag -mmic
+copy the executable to the mic0 or mic1 with a scp a.out mic0:
+execute it on the mic: ssh mic0 ./a.out
+Please take into account that a minimal set of libraries is available on the mic.

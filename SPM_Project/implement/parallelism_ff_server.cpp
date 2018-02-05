@@ -4,15 +4,18 @@
 #include <ff/pipeline.hpp>
 #include <string.h>
 #include <random>
-#include <Montecarlo.h>
-#include <function.h>
+
+
 #include <vector>
-#include <stage.h>
-#include <interval_number.h>
+
 #include <chrono>
 #include <mutex>
 #include <atomic>
 
+#include "Montecarlo.h"
+//#include <stage.h>
+//#include <interval_number.h>
+//1#include <function.h>
 using namespace Montecarlo;
 std::mutex m;
 

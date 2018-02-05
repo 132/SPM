@@ -1,9 +1,9 @@
-#include <spdlog/spdlog.h>
-#include <spdlog/sinks/null_sink.h>
+//#include <spdlog/spdlog.h>
+//#include <spdlog/sinks/null_sink.h>
 #include <Montecarlo.h>
 
 namespace Montecarlo {
-
+/*
 static const std::string DefaultLoggerName = "Montecarlo-log";
 static const std::string NullLoggerName = "Montecarlo-null-log";
 
@@ -28,6 +28,6 @@ std::shared_ptr<spdlog::logger> DefaultLogger(){
 
 std::shared_ptr<spdlog::logger> NullLogger(){
     return NullLoggerPtr;
-}
+}*/
 
 }

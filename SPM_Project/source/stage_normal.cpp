@@ -1,16 +1,12 @@
 #include <ff/pipeline.hpp>
 #include <ff/farm.hpp>
-
+#include <stage.h>
+#include <Montecarlo.h>
 #include <iostream>
 #include <random>
 #include <string.h>
 #include <fstream>
-
-#include <ctime>
-
-#include "stage.h"
-#include "Montecarlo.h"
-#include "function.h"
+#include <function.h>
 
 using namespace ff;
 namespace Montecarlo{
@@ -31,7 +27,6 @@ namespace Montecarlo{
     }
  // second stage ff_node_F<interval_number>
     interval_number * randomNumber(interval_number *intervalN, ff_node *const){
-        /*
         std::mt19937 rng;
         rng.seed(std::random_device()());
         std::uniform_int_distribution<std::mt19937::result_type> dist6(intervalN->b-intervalN->a,5*(intervalN->b-intervalN->a)); // distribution in range [1, 6]
@@ -39,26 +34,17 @@ namespace Montecarlo{
         //std::cout << "random N: "<<dist6(rng) << " of "<<intervalN->a<< " "<<intervalN->b<<std::endl;
         intervalN->setN(dist6(rng));
         return intervalN;
-        */
-        int seed = time(NULL);
-        srand(seed);
-        intervalN->setN(rand() % 5*(intervalN->b-intervalN->a) + (intervalN->b-intervalN->a));
-        return intervalN;
     }
 // third stage ff_node<interval_number
     interval_number * randomListNumber(interval_number *intervalN, ff_node *const){
         int * temp = new int [intervalN->N_number];
-        int seed = time(NULL);
-        srand(seed);
+        
         for(int i=0; i<intervalN->N_number; i++){
-            /*
             std::mt19937 rng;
             rng.seed(std::random_device()());
             std::uniform_int_distribution<std::mt19937::result_type> dist6(intervalN->a,intervalN->b);
             //std::cout << "random in N: "<<dist6(rng)<<std::endl;
             temp[i] = dist6(rng);
-            */
-            temp[i] = rand() % intervalN->b + intervalN->a;
         }
         //std::cout<<"complete .. "<<std::endl;
         intervalN->setListNumber(temp);
