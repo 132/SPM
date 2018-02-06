@@ -13,19 +13,25 @@
 #include <atomic>
 
 #include "Montecarlo.h"
-//#include <stage.h>
-//#include <interval_number.h>
-//1#include <function.h>
+#include "stage.h"
+#include "interval_number.h"
+#include "function.h"
 using namespace Montecarlo;
 std::mutex m;
 
 int main(int argc, char * argv[]) {
 // take the arguments from the command line
     
-    int nworkers = atoi(argv[1])-4;
+    int nworkers = atoi(argv[1])-5;
 // take parameters and power of given function
+    std::string fileName = argv[2];
     
-    int pow = atoi(argv[2]);
+    //std::cout<<"name file: "<<fileName<<std::endl;
+    int pow = atoi(argv[3]);
+    if(argc != pow + 5){
+        std::cout<<"Error: not correct the number of Prameters"<<std::endl;
+        return 1;
+    }
     double * listPara = new double [pow+1];
     for(int i=0;i<pow+1;i++)
         listPara[i] = atof(argv[i+3]);
@@ -33,10 +39,9 @@ int main(int argc, char * argv[]) {
     //std::cout<<"number of argument: "<<argc<<std::endl;
     
 // chec is it enough parameters
-    if(argc != pow + 4)
-        std::cout<<"Error: Lack of Parameter"<<std::endl;
     
-    std::string fileName = "../input/Input.txt";
+    
+    //std::string fileName = "../input/Input.txt";
     //std::string outFile = "../input/Output.txt";
     std::ofstream ofs;
     ofs.open("../input/Output.txt", std::ofstream::out | std::ofstream::trunc);
