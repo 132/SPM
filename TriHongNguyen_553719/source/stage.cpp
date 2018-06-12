@@ -40,16 +40,16 @@ namespace Montecarlo{
         intervalN->setN(dist6(rng));
         return intervalN;
         */
-        int seed = time(NULL);
-        srand(seed);
-        intervalN->setN(rand() % 5*(intervalN->b-intervalN->a) + (intervalN->b-intervalN->a));
+//        int seed = time(NULL);
+        srand(0);
+        intervalN->setN(rand() % (intervalN->b-intervalN->a) + (intervalN->b-intervalN->a));
         return intervalN;
     }
 // third stage ff_node<interval_number
     interval_number * randomListNumber(interval_number *intervalN, ff_node *const){
         int * temp = new int [intervalN->N_number];
-        int seed = time(NULL);
-        srand(seed);
+//        int seed = time(NULL);
+//        srand(seed);
         for(int i=0; i<intervalN->N_number; i++){
             /*
             std::mt19937 rng;
@@ -58,6 +58,7 @@ namespace Montecarlo{
             //std::cout << "random in N: "<<dist6(rng)<<std::endl;
             temp[i] = dist6(rng);
             */
+	    srand(intervalN->id+i);
             temp[i] = rand() % intervalN->b + intervalN->a;
         }
         //std::cout<<"complete .. "<<std::endl;

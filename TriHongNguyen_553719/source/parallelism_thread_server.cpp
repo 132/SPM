@@ -44,16 +44,23 @@ bool endOfFarm = false;
 int endOfWorker = 0;
 
 int randomNumberN(interval_number * intervalN){
-    int seed = time(NULL);
-    srand(seed);
-    return rand() % (intervalN->b - intervalN->a)*5 +  (intervalN->b - intervalN->a);
+
+//    int seed = time(NULL);
+//    srand(seed);
+	srand(intervalN->id);
+	return rand() % (intervalN->b - intervalN->a) +  (intervalN->b - intervalN->a);
+//	srand(intervalN->id);
+//	return rand() % intervalN->b + intervalN->a;
 }
 
 void randomListNumberN(interval_number * intervalN){
     int * temp = new int [intervalN->N_number];
-    int seed = time(NULL);
-    srand(seed);
+//    int seed = time(NULL);
+//    srand(seed);
     for(int i=0; i<intervalN->N_number; i++){
+
+	srand(intervalN->id+i);
+
         temp[i] = rand() % intervalN->b + intervalN->a;
     }
     intervalN->setListNumber(temp);
