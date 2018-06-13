@@ -1,0 +1,6 @@
+/home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/testing/CMakeFiles/edit_cache.dir
+/home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/testing/CMakeFiles/rebuild_cache.dir
+/home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/testing/CMakeFiles/Montecarlo.dir
+/home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/testing/CMakeFiles/threads.dir
+/home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/testing/CMakeFiles/ff.dir
+/home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/testing/CMakeFiles/seq.dir

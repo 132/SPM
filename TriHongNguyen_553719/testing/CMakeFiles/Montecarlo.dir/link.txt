@@ -1,0 +1,2 @@
+/usr/bin/ar qc libMontecarlo.a  CMakeFiles/Montecarlo.dir/source/parallelism_ff_server.cpp.o CMakeFiles/Montecarlo.dir/source/interval_number.cpp.o CMakeFiles/Montecarlo.dir/source/parallelism_thread_server.cpp.o CMakeFiles/Montecarlo.dir/source/Montecarlo.cpp.o CMakeFiles/Montecarlo.dir/source/function.cpp.o CMakeFiles/Montecarlo.dir/source/sequantialization.cpp.o CMakeFiles/Montecarlo.dir/source/stage.cpp.o
+/usr/bin/ranlib libMontecarlo.a

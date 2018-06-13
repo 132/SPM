@@ -1,0 +1,11 @@
+Script started on mar 12 giu 2018 18:31:01 CEST
+bialan132@LinuxLite:~/Public/Studying/SPM/SPM/TriHongNguyen_553719//scriptFolder$ ../[K[K[K./r[Kth[K[K[K[Kls
+result.txt  runThread.py
+bialan132@LinuxLite:~/Public/Studying/SPM/SPM/TriHongNguyen_553719//scriptFolder$ ls -l
+total 4
+-rw-rw-r-- 1 bialan132 bialan132   0 giu 12 18:31 result.txt
+-rw-rw-r-- 1 bialan132 bialan132 103 giu 12 18:28 runThread.py
+bialan132@LinuxLite:~/Public/Studying/SPM/SPM/TriHongNguyen_553719//scriptFolder$ exit
+exit
+
+Script done on mar 12 giu 2018 18:31:23 CEST

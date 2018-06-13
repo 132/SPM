@@ -1,0 +1,7 @@
+Script started on mar 12 giu 2018 18:38:40 CEST
+bialan132@LinuxLite:~/Public/Studying/SPM/SPM/TriHongNguyen_553719//scriptFolder$ a
+a: command not found
+bialan132@LinuxLite:~/Public/Studying/SPM/SPM/TriHongNguyen_553719//scriptFolder$ exit
+exit
+
+Script done on mar 12 giu 2018 18:38:49 CEST

@@ -32,8 +32,10 @@ int main(int argc, char * argv[]) {
         return 1;
     }
     double * listPara = new double [pow+1];
-    for(int i=0;i<pow+1;i++)
-        listPara[i] = atof(argv[i+3]);
+    for(int i=0;i<pow+1;i++){
+        listPara[i] = atof(argv[i+4]);
+//std::cout<<listPara[i]<< " ";
+}
 
     std::ofstream ofs;
     ofs.open("Output_ff.txt", std::ofstream::out | std::ofstream::trunc);

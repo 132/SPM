@@ -34,7 +34,7 @@ int main(int argc, char * argv[]) {
     streamInterval.open(fileName);
 
     std::ofstream ofs;
-    ofs.open("../Output_Seq.txt", std::ofstream::out | std::ofstream::trunc);
+    ofs.open("Output_Seq.txt", std::ofstream::out | std::ofstream::trunc);
 //    ofs.close();
  
     int id = 0;

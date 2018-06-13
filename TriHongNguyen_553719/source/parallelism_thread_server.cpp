@@ -251,7 +251,7 @@ int main(int argc, char * argv[]) {
 
     double * listPara = new double [pow+1];
     for(int i=0;i<pow+1;i++)
-        listPara[i] = atof(argv[i+3]);
+        listPara[i] = atof(argv[i+4]);
     func givenFunc(pow, listPara);
     
     std::ifstream streamInterval;

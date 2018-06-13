@@ -41,7 +41,7 @@ namespace Montecarlo{
         return intervalN;
         */
 //        int seed = time(NULL);
-        srand(0);
+        srand(intervalN->id);
         intervalN->setN(rand() % (intervalN->b-intervalN->a) + (intervalN->b-intervalN->a));
         return intervalN;
     }
@@ -67,15 +67,16 @@ namespace Montecarlo{
     }
 
 // main Task
-    interval_number * calculateMonte(interval_number * intervalN, ff_node *const){
-        intervalN->calMonteNumber();
-        return intervalN;
-    }
+//    interval_number * calculateMonte(interval_number * intervalN, ff_node *const){
+//        intervalN->calMonteNumber();
+//        return intervalN;
+//    }
     
     worker_farm::worker_farm(){
     }
     
     interval_number * worker_farm::svc(interval_number * intervalN){
+//	std::cout<<"cal: "<<intervalN->id<<std::endl;
         intervalN->calMonteNumber();
         return intervalN;
     }
@@ -84,7 +85,9 @@ namespace Montecarlo{
         std::ofstream outStream;
         std::queue<interval_number* > tempQ;
         int position = 1;
-        outStream.open("Output.txt", std::ios_base::app);
+//        outStream.open("Output.txt", std::ios_base::app);
+	 outStream.open("Output_ff.txt", std::ios_base::app);
+
         outStream << intervalN->monteNumber<<" ";
         delete intervalN;
         return (interval_number *)GO_ON;
