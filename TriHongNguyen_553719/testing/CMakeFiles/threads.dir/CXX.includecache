@@ -17,6 +17,8 @@ Montecarlo.h
 /home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/source/Montecarlo.h
 function.h
 /home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/source/function.h
+chrono
+-
 
 /home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/source/parallelism_thread_server.cpp
 iostream
@@ -49,4 +51,8 @@ interval_number.h
 /home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/source/interval_number.h
 Montecarlo.h
 /home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/source/Montecarlo.h
+vector
+-
+algorithm
+-
 

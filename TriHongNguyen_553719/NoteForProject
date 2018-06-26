@@ -48,3 +48,19 @@ Please take into account that a minimal set of libraries is available on the mic
 
 
 g++ -std=c++11 function.cpp interval_number.cpp sequantialization.cpp -o sequantialization
+
+
+
+//////////////////////////////////////////////////////////////
+
+login to new machine:ssh spm17c05@C6320p-2.itc.unipi.it 
+pass: trid*ptr*iv*doi
+
+scp -r /home/bialan132/Public/Studying/SPM/SPM/TriHongNguyen_553719/scriptFolder/ spm17c05@c6320p-2.itc.unipi.it:
+
+source /opt/intel/compilers_and_libraries/linux/bin/compilervars.sh intel64
+
+
+icc Montecarlo.cpp function.cpp interval_number.cpp stage.cpp parallelism_ff_server.cpp -std=c++11 -I/home/spm17c05/source/ff -pthread -O3 -DNO_DEFAULT_MAPPING -o ff
+
+use CMake

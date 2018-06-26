@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/threads_parallelism.dir/implement/parallelism_thread.cpp.o  -o threads_parallelism libMontecarlo.a -lpthread 

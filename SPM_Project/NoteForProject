@@ -45,3 +45,6 @@ compile it on the host using icc with the additional flag -mmic
 copy the executable to the mic0 or mic1 with a scp a.out mic0:
 execute it on the mic: ssh mic0 ./a.out
 Please take into account that a minimal set of libraries is available on the mic.
+
+
+g++ -std=c++11 function.cpp interval_number.cpp sequantialization.cpp -o sequantialization

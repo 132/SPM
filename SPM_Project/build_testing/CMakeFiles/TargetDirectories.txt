@@ -1,0 +1,6 @@
+/home/bialan132/Public/Studying/SPM/SPM/SPM_Project/build_testing/CMakeFiles/Montecarlo.dir
+/home/bialan132/Public/Studying/SPM/SPM/SPM_Project/build_testing/CMakeFiles/threads_parallelism.dir
+/home/bialan132/Public/Studying/SPM/SPM/SPM_Project/build_testing/CMakeFiles/edit_cache.dir
+/home/bialan132/Public/Studying/SPM/SPM/SPM_Project/build_testing/CMakeFiles/ff_parallelism.dir
+/home/bialan132/Public/Studying/SPM/SPM/SPM_Project/build_testing/CMakeFiles/rebuild_cache.dir
+/home/bialan132/Public/Studying/SPM/SPM/SPM_Project/build_testing/CMakeFiles/parallelism_thread_server.dir

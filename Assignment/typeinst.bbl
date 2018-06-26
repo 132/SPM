@@ -1,0 +1,13 @@
+\begin{thebibliography}{1}
+
+\bibitem{thread}
+C++ threads.
+\newblock \url{http://en.cppreference.com/w/cpp/thread}.
+\newblock [accessed 05 Feb 2018].
+
+\bibitem{fastflow}
+Fastflow framework tutorial.
+\newblock \url{http://calvados.di.unipi.it/storage/tutorial/fftutorial.pdf}.
+\newblock [accessed 05 Feb 2018].
+
+\end{thebibliography}
